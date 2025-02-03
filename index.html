@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Løftekalkulator - Øyebolter/Øyemuttere</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .calculator {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            font-size: 24px;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            text-align: left;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            background: #e6f7ff;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h1>Løftekalkulator - Øyebolter/Øyemuttere</h1>
+
+        <label for="material">Materialkvalitet ST37:</label>
+        <select id="material">
+            <option value="nei">Nei</option>
+            <option value="ja">Ja</option>
+        </select>
+
+        <label for="dimension">Velg Dimensjon (mm):</label>
+        <select id="dimension">
+            <option value="8">8 mm</option>
+            <option value="10">10 mm</option>
+            <option value="12">12 mm</option>
+            <option value="16">16 mm</option>
+            <option value="20">20 mm</option>
+            <option value="24">24 mm</option>
+        </select>
+
+        <label for="liftType">Velg Løftetype:</label>
+        <select id="liftType">
+            <option value="rett">Rett strekk</option>
+            <option value="sidelengs45">Sidelengs 45°</option>
+            <option value="sidelengs45prosent">45% sidelengs</option>
+        </select>
+
+        <button onclick="calculate()">Beregn</button>
+        <div class="result" id="result">Maks belastning: <span id="maxLoad">0</span> tonn</div>
+    </div>
+
+    <script>
+        function calculate() {
+            const material = document.getElementById('material').value;
+            const dimension = parseInt(document.getElementById('dimension').value);
+            const liftType = document.getElementById('liftType').value;
+
+            // Baseline WLL values in tons for Grade 80
+            const wllTable = {
+                8: 0.7,
+                10: 1.2,
+                12: 1.8,
+                16: 2.0,
+                20: 2.5,
+                24: 4.0
+            };
+
+            // Adjustment factors based on lift type
+            const liftFactors = {
+                'rett': 1.0,
+                'sidelengs45': 0.7,
+                'sidelengs45prosent': 0.45
+            };
+
+            // Check if dimension exists in the table
+            if (!wllTable[dimension]) {
+                document.getElementById('result').innerText = "Ugyldig dimensjon";
+                return;
+            }
+
+            // Base load capacity
+            let baseLoad = wllTable[dimension];
+
+            // Adjust for material quality ST37
+            if (material === 'ja') {
+                baseLoad *= 0.75; // Assuming a 25% reduction for ST37
+            }
+
+            // Adjust for lift type
+            const liftFactor = liftFactors[liftType]
+::contentReference[oaicite:0]{index=0}
+ 
