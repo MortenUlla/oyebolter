@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Løftekalkulator for Øyebolter/Øyemuttere</title>
+    <title>Løftekalkulator - Øyebolter/Øyemuttere</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -113,15 +113,43 @@
             const material = document.getElementById('material').value;
             const liftType = document.getElementById('liftType').value;
 
-            // WLL values in tons
+            // WLL-tabell (Arbeidsbelastningsgrense i tonn)
             const wllTable = {
-                'C15': {
-                    6: 0.07,
-                    8: 0.14,
-                    10: 0.23,
-                    12: 0.34,
-                    16: 0.7,
-                    20: 1.2,
-                   
-::contentReference[oaicite:0]{index=0}
- 
+                'C15': { 6: 0.07, 8: 0.14, 10: 0.23, 12: 0.34, 16: 0.7, 20: 1.2, 24: 1.8, 30: 3.2, 36: 4.6 },
+                'Grade80': { 6: 0.14, 8: 0.3, 10: 0.5, 12: 0.7, 16: 1.5, 20: 2.5, 24: 3.6, 30: 6.0, 36: 8.0 }
+            };
+
+            // Reduksjonsfaktorer for løftetype
+            const liftFactors = {
+                'rett': 1.0,
+                'sidelengs45': 0.7,
+                'sidelengs45prosent': 0.45
+            };
+
+            // Sjekk om dimensjonen eksisterer i tabellen
+            if (!wllTable[type] || !wllTable[type][dimension]) {
+                document.getElementById('result').innerText = "Ugyldig dimensjon eller type";
+                return;
+            }
+
+            let baseLoad = wllTable[type][dimension];
+
+            // Justering for materialkvalitet ST37 (20% reduksjon)
+            if (material === 'ja') {
+                baseLoad *= 0.8;
+            }
+
+            // Justering for løftetype
+            const liftFactor = liftFactors[liftType] || 1.0;
+            let maxLoad = baseLoad * liftFactor;
+
+            // Sikre at resultatet er gyldig
+            if (isNaN(maxLoad) || maxLoad <= 0) {
+                document.getElementById('maxLoad').innerText = "Feil i beregning!";
+            } else {
+                document.getElementById('maxLoad').innerText = maxLoad.toFixed(2) + " tonn";
+            }
+        }
+    </script>
+</body>
+</html>
