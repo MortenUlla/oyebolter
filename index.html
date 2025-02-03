@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Løftekalkulator - Øyebolter/Øyemuttere</title>
+    <title>Løftekalkulator for Øyebolter/Øyemuttere</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -70,20 +70,29 @@
     <div class="calculator">
         <h1>Løftekalkulator - Øyebolter/Øyemuttere</h1>
 
-        <label for="material">Materialkvalitet ST37:</label>
-        <select id="material">
-            <option value="nei">Nei</option>
-            <option value="ja">Ja</option>
+        <label for="type">Velg Type:</label>
+        <select id="type">
+            <option value="C15">C15</option>
+            <option value="Grade80">Grade 80</option>
         </select>
 
         <label for="dimension">Velg Dimensjon (mm):</label>
         <select id="dimension">
-            <option value="8">8 mm</option>
-            <option value="10">10 mm</option>
-            <option value="12">12 mm</option>
-            <option value="16">16 mm</option>
-            <option value="20">20 mm</option>
-            <option value="24">24 mm</option>
+            <option value="6">M6</option>
+            <option value="8">M8</option>
+            <option value="10">M10</option>
+            <option value="12">M12</option>
+            <option value="16">M16</option>
+            <option value="20">M20</option>
+            <option value="24">M24</option>
+            <option value="30">M30</option>
+            <option value="36">M36</option>
+        </select>
+
+        <label for="material">Materialkvalitet ST37:</label>
+        <select id="material">
+            <option value="nei">Nei</option>
+            <option value="ja">Ja</option>
         </select>
 
         <label for="liftType">Velg Løftetype:</label>
@@ -99,46 +108,20 @@
 
     <script>
         function calculate() {
-            const material = document.getElementById('material').value;
+            const type = document.getElementById('type').value;
             const dimension = parseInt(document.getElementById('dimension').value);
+            const material = document.getElementById('material').value;
             const liftType = document.getElementById('liftType').value;
 
-            // Baseline WLL values in tons for Grade 80
+            // WLL values in tons
             const wllTable = {
-                8: 0.7,
-                10: 1.2,
-                12: 1.8,
-                16: 2.0,
-                20: 2.5,
-                24: 4.0
-            };
-
-            // Adjustment factors based on lift type
-            const liftFactors = {
-                'rett': 1.0,
-                'sidelengs45': 0.7,
-                'sidelengs45prosent': 0.45
-            };
-
-            // Check if dimension exists in the table
-            if (!wllTable[dimension]) {
-                document.getElementById('result').innerText = "Ugyldig dimensjon";
-                return;
-            }
-
-            // Base load capacity
-            let baseLoad = wllTable[dimension];
-
-            // Adjust for material quality ST37
-            if (material === 'ja') {
-                baseLoad *= 0.75; // Assuming a 25% reduction for ST37
-            }
-
-            // Adjust for lift type
-            const liftFactor = liftFactors[liftType] || 1.0;
-            const maxLoad = baseLoad * liftFactor;
-
-            // Display the result
-            document.getElementById('maxLoad').
+                'C15': {
+                    6: 0.07,
+                    8: 0.14,
+                    10: 0.23,
+                    12: 0.34,
+                    16: 0.7,
+                    20: 1.2,
+                   
 ::contentReference[oaicite:0]{index=0}
  
