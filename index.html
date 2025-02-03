@@ -135,6 +135,10 @@
             }
 
             // Adjust for lift type
-            const liftFactor = liftFactors[liftType]
+            const liftFactor = liftFactors[liftType] || 1.0;
+            const maxLoad = baseLoad * liftFactor;
+
+            // Display the result
+            document.getElementById('maxLoad').
 ::contentReference[oaicite:0]{index=0}
  
